@@ -130,7 +130,13 @@
     return self;
 }
 
-- (void) apply {    
+- (void) apply {
+	if (basicEffect.vertexColorEnabled) {
+		glEnable(GL_COLOR_MATERIAL);
+	} else {
+		glDisable(GL_COLOR_MATERIAL);
+	}
+	
     // Set material.
     Vector4Struct data;
     Vector4Set(&data, basicEffect.ambientColor.x, basicEffect.ambientColor.y, basicEffect.ambientColor.z, basicEffect.alpha);
@@ -145,12 +151,6 @@
     
     Vector4Set(&data, basicEffect.emissiveColor.x, basicEffect.emissiveColor.y, basicEffect.emissiveColor.z, 1);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, (float*)&data);
-    
-    if (basicEffect.vertexColorEnabled) {
-        glEnable(GL_COLOR_MATERIAL);
-    } else {
-        glDisable(GL_COLOR_MATERIAL);
-    }
     
     // Set texturing.
     if (basicEffect.textureEnabled) {
