@@ -131,11 +131,21 @@
 }
 
 - (void) apply {
-	if (basicEffect.vertexColorEnabled) {
-		glEnable(GL_COLOR_MATERIAL);
-	} else {
-		glDisable(GL_COLOR_MATERIAL);
-	}
+    if (basicEffect.vertexColorEnabled) {
+        glEnable(GL_COLOR_MATERIAL);
+    } else {
+        glDisable(GL_COLOR_MATERIAL);
+    }
+	
+    if(basicEffect.fogEnabled) {
+        glEnable(GL_FOG);
+        glFogf(GL_FOG_MODE, GL_LINEAR);
+        glFogf(GL_FOG_START, basicEffect.fogStart);
+        glFogf(GL_FOG_END, basicEffect.fogEnd);
+        glFogfv(GL_FOG_COLOR, (float*)basicEffect.fogColor.data);
+    } else {
+        glDisable(GL_FOG);
+    }
 	
     // Set material.
     Vector4Struct data;
